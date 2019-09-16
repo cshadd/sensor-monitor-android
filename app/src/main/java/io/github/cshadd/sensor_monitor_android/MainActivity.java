@@ -167,7 +167,7 @@ public class MainActivity
         }
         this.assignSensor(Sensor.TYPE_ORIENTATION, "ORIENTATION",
                 new String[]{"AZIMUTH", "PITCH", "ROLL"},
-                new String[]{(char)0x00B0 + "", (char)0x00B0 + "T", (char)0x00B0 + ""});
+                new String[]{(char)0x00B0 + "", (char)0x00B0 + "", (char)0x00B0 + ""});
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             this.assignSensor(Sensor.TYPE_POSE_6DOF, "POSE_6DOF",
                     new String[]{"X", "Y", "Z", null, "X_T", "Y_T", "Z_T",
