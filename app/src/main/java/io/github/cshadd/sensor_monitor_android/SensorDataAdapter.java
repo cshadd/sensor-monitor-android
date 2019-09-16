@@ -92,12 +92,20 @@ public class SensorDataAdapter
                     && valueMin != null && valuePrefix != null
                     && valueSuffix != null) {
                 for (int i = 0; i < value.length; i++) {
-                    sensorValueText += valuePrefix[i] + " ~" + roundAvoid(value[i], 2)
-                            + " " + valueSuffix[i] + ";\n";
-                    sensorValueMaxText += valuePrefix[i] + " ~" + roundAvoid(valueMax[i], 2)
-                            + " " + valueSuffix[i] + ";\n";
-                    sensorValueMinText += valuePrefix[i] + " ~" + roundAvoid(valueMin[i], 2)
-                            + " " + valueSuffix[i] + ";\n";
+                    String prefix = valuePrefix[i];
+                    String suffix = valueSuffix[i];
+                    if (valuePrefix[i] == null) {
+                        prefix = "RAW";
+                    }
+                    if (valueSuffix[i] == null) {
+                        suffix = "";
+                    }
+                    sensorValueText += prefix + ": ~" + roundAvoid(value[i], 2)
+                            + " " + suffix + ";\n";
+                    sensorValueMaxText += prefix + ": ~" + roundAvoid(valueMax[i], 2)
+                            + " " + suffix + ";\n";
+                    sensorValueMinText += prefix + ": ~" + roundAvoid(valueMin[i], 2)
+                            + " " + suffix + ";\n";
                 }
             }
 

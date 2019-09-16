@@ -61,11 +61,11 @@ public class MainActivity
                             @Override
                             public void onSensorChanged(SensorEvent arg0) {
                                 if (sensorDataAdapter != null) {
-                                    data.setValue(arg0.values);
                                     if (valuePrefix != null && valueSuffix != null) {
                                         data.setValuePrefix(valuePrefix);
                                         data.setValueSuffix(valueSuffix);
                                     }
+                                    data.setValue(arg0.values);
 
                                     sensorDataAdapter.notifyDataSetChanged();
                                 }
@@ -106,24 +106,37 @@ public class MainActivity
         this.sensorRecycler = this.findViewById(R.id.sensor_recycler);
         this.vibrator = (Vibrator)this.getSystemService(Context.VIBRATOR_SERVICE);
 
-        this.assignSensor(Sensor.TYPE_ACCELEROMETER, "ACCELEROMETER", new String[]{"X:", "Y:", "Z:"}, new String[]{"m/s^2", "m/s^2", "m/s^2"});
+        this.assignSensor(Sensor.TYPE_ACCELEROMETER, "ACCELEROMETER",
+                new String[]{"X", "Y", "Z"},
+                new String[]{"m/s^2", "m/s^2", "m/s^2"});
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            this.assignSensor(Sensor.TYPE_ACCELEROMETER_UNCALIBRATED, "ACCELEROMETER_UNCALIBRATED");
+            this.assignSensor(Sensor.TYPE_ACCELEROMETER_UNCALIBRATED, "ACCELEROMETER_UNCALIBRATED",
+                    new String[]{"X", "Y", "Z", "X_B", "Y_B", "Z_B"},
+                    new String[]{"m/s^2", "m/s^2", "m/s^2", "m/s^2", "m/s^2", "m/s^2"});
         }
-        this.assignSensor(Sensor.TYPE_AMBIENT_TEMPERATURE, "AMBIENT_TEMPERATURE");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            this.assignSensor(Sensor.TYPE_DEVICE_PRIVATE_BASE, "DEVICE_PRIVATE_BASE");
-        }
+        this.assignSensor(Sensor.TYPE_AMBIENT_TEMPERATURE, "AMBIENT_TEMPERATURE",
+                new String[]{null},
+                new String[]{(char)0x00B0 + "C"});
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            this.assignSensor(Sensor.TYPE_GAME_ROTATION_VECTOR, "GAME_ROTATION_VECTOR");
+            this.assignSensor(Sensor.TYPE_GAME_ROTATION_VECTOR, "GAME_ROTATION_VECTOR",
+                    new String[]{"X", "Y", "Z", null},
+                    new String[]{null, null, null, null});
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            this.assignSensor(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR, "GEOMAGNETIC_ROTATION_VECTOR");
+            this.assignSensor(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR, "GEOMAGNETIC_ROTATION_VECTOR",
+                    new String[]{"X", "Y", "Z", null, "ACC"},
+                    new String[]{null, null, null, null, "rads"});
         }
-        this.assignSensor(Sensor.TYPE_GRAVITY, "GRAVITY");
-        this.assignSensor(Sensor.TYPE_GYROSCOPE, "GYROSCOPE");
+        this.assignSensor(Sensor.TYPE_GRAVITY, "GRAVITY",
+                new String[]{"X", "Y", "Z"},
+                new String[]{"m/s^2", "m/s^2", "m/s^2"});
+        this.assignSensor(Sensor.TYPE_GYROSCOPE, "GYROSCOPE",
+                new String[]{"X", "Y", "Z"},
+                new String[]{"rad/s", "rad/s", "rad/s"});
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            this.assignSensor(Sensor.TYPE_GYROSCOPE_UNCALIBRATED, "GYROSCOPE_UNCALIBRATED");
+            this.assignSensor(Sensor.TYPE_GYROSCOPE_UNCALIBRATED, "GYROSCOPE_UNCALIBRATED",
+                    new String[]{"X", "Y", "Z", "X_D", "Y_D", "Z_D"},
+                    new String[]{"rad/s", "rad/s", "rad/s", "rad/s", "rad/s", "rad/s"});
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             this.assignSensor(Sensor.TYPE_HEART_BEAT, "HEART_BEAT");
@@ -131,26 +144,49 @@ public class MainActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             this.assignSensor(Sensor.TYPE_HEART_RATE, "HEART_RATE");
         }
-        this.assignSensor(Sensor.TYPE_LIGHT, "LIGHT");
-        this.assignSensor(Sensor.TYPE_LINEAR_ACCELERATION, "LINEAR_ACCELERATION");
+        this.assignSensor(Sensor.TYPE_LIGHT, "LIGHT",
+                new String[]{null},
+                new String[]{"lx"});
+        this.assignSensor(Sensor.TYPE_LINEAR_ACCELERATION, "LINEAR_ACCELERATION",
+                new String[]{"X", "Y", "Z"},
+                new String[]{"m/s^2", "m/s^2", "m/s^2"});
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             this.assignSensor(Sensor.TYPE_LOW_LATENCY_OFFBODY_DETECT, "LOW_LATENCY_OFFBODY_DETECT");
         }
-        this.assignSensor(Sensor.TYPE_MAGNETIC_FIELD, "MAGNETIC_FIELD");
+        this.assignSensor(Sensor.TYPE_MAGNETIC_FIELD, "MAGNETIC_FIELD",
+                new String[]{"X", "Y", "Z"},
+                new String[]{(char)0x00B5 + "T", (char)0x00B5 + "T", (char)0x00B5 + "T"});
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            this.assignSensor(Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED, "MAGNETIC_FIELD_UNCALIBRATED");
+            this.assignSensor(Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED, "MAGNETIC_FIELD_UNCALIBRATED",
+                    new String[]{"X", "Y", "Z", "X_B", "Y_B", "Z_B"},
+                    new String[]{(char)0x00B5 + "T", (char)0x00B5 + "T", (char)0x00B5 + "T",
+                            (char)0x00B5 + "T", (char)0x00B5 + "T", (char)0x00B5 + "T"});
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             this.assignSensor(Sensor.TYPE_MOTION_DETECT, "MOTION_DETECT");
         }
-        this.assignSensor(Sensor.TYPE_ORIENTATION, "ORIENTATION");
+        this.assignSensor(Sensor.TYPE_ORIENTATION, "ORIENTATION",
+                new String[]{"AZIMUTH", "PITCH", "ROLL"},
+                new String[]{(char)0x00B0 + "", (char)0x00B0 + "T", (char)0x00B0 + ""});
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            this.assignSensor(Sensor.TYPE_POSE_6DOF, "POSE_6DOF");
+            this.assignSensor(Sensor.TYPE_POSE_6DOF, "POSE_6DOF",
+                    new String[]{"X", "Y", "Z", null, "X_T", "Y_T", "Z_T",
+                        "D_Q_X", "D_Q_Y", "D_Q_Z", null, "D_T_X", "D_T_Y", "D_T_Z", "SEQ"},
+                    new String[]{null, null, null, null, null, null, null, null, null, null,
+                            null, null, null, null, null});
         }
-        this.assignSensor(Sensor.TYPE_PRESSURE, "PRESSURE");
-        this.assignSensor(Sensor.TYPE_PROXIMITY, "PROXIMITY");
-        this.assignSensor(Sensor.TYPE_RELATIVE_HUMIDITY, "RELATIVE_HUMIDITY");
-        this.assignSensor(Sensor.TYPE_ROTATION_VECTOR, "ROTATION_VECTOR");
+        this.assignSensor(Sensor.TYPE_PRESSURE, "PRESSURE",
+                new String[]{null},
+                new String[]{"hPa"});
+        this.assignSensor(Sensor.TYPE_PROXIMITY, "PROXIMITY",
+                new String[]{null},
+                new String[]{"cm"});
+        this.assignSensor(Sensor.TYPE_RELATIVE_HUMIDITY, "RELATIVE_HUMIDITY",
+                new String[]{null},
+                new String[]{"%"});
+        this.assignSensor(Sensor.TYPE_ROTATION_VECTOR, "ROTATION_VECTOR",
+                new String[]{"X", "Y", "Z", null, "ACC"},
+                new String[]{null, null, null, null, "rads"});
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             this.assignSensor(Sensor.TYPE_SIGNIFICANT_MOTION, "SIGNIFICANT_MOTION");
         }
@@ -163,7 +199,9 @@ public class MainActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             this.assignSensor(Sensor.TYPE_STEP_DETECTOR, "STEP_DETECTOR");
         }
-        this.assignSensor(Sensor.TYPE_TEMPERATURE, "TEMPERATURE");
+        this.assignSensor(Sensor.TYPE_TEMPERATURE, "TEMPERATURE",
+                new String[]{null},
+                new String[]{(char)0x00B0 + "C"});
         this.assignSensor(Sensor.TYPE_ALL, "NO_SENSORS");
 
         this.sensorRecycler.setAdapter(this.sensorDataAdapter);
