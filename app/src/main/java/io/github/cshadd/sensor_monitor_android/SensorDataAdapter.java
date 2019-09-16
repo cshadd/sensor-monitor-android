@@ -40,12 +40,12 @@ public class SensorDataAdapter
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.sensorAvailable = (CardView)itemView.findViewById(R.id.sensor_available);
-            this.sensorAvailableText = (TextView)itemView.findViewById(R.id.sensor_available_text);
-            this.sensorName = (TextView)itemView.findViewById(R.id.sensor_name);
-            this.sensorValue = (TextView)itemView.findViewById(R.id.sensor_value);
-            this.sensorValueMax = (TextView)itemView.findViewById(R.id.sensor_value_max);
-            this.sensorValueMin = (TextView)itemView.findViewById(R.id.sensor_value_min);
+            this.sensorAvailable = itemView.findViewById(R.id.sensor_available);
+            this.sensorAvailableText = itemView.findViewById(R.id.sensor_available_text);
+            this.sensorName = itemView.findViewById(R.id.sensor_name);
+            this.sensorValue = itemView.findViewById(R.id.sensor_value);
+            this.sensorValueMax = itemView.findViewById(R.id.sensor_value_max);
+            this.sensorValueMin = itemView.findViewById(R.id.sensor_value_min);
         }
     }
 
@@ -81,15 +81,24 @@ public class SensorDataAdapter
             final float[] value = sensor.getValue();
             final float[] valueMax = sensor.getValueMax();
             final float[] valueMin = sensor.getValueMin();
+            final String[] valuePrefix = sensor.getValuePrefix();
+            final String[] valueSuffix = sensor.getValueSuffix();
 
             String sensorValueText = "{\n";
             String sensorValueMaxText = "{\n";
             String sensorValueMinText = "{\n";
 
-            for (int i = 0; i < value.length; i++) {
-                sensorValueText += value[i] + ";\n";
-                sensorValueMaxText += valueMax[i] + ";\n";
-                sensorValueMinText += valueMin[i] + ";\n";
+            if (value != null && valueMax != null
+                    && valueMin != null && valuePrefix != null
+                    && valueSuffix != null) {
+                for (int i = 0; i < value.length; i++) {
+                    sensorValueText += valuePrefix[i] + " ~" + roundAvoid(value[i], 2)
+                            + " " + valueSuffix[i] + ";\n";
+                    sensorValueMaxText += valuePrefix[i] + " ~" + roundAvoid(valueMax[i], 2)
+                            + " " + valueSuffix[i] + ";\n";
+                    sensorValueMinText += valuePrefix[i] + " ~" + roundAvoid(valueMin[i], 2)
+                            + " " + valueSuffix[i] + ";\n";
+                }
             }
 
             sensorValueText += "}";
@@ -109,5 +118,10 @@ public class SensorDataAdapter
             return sensorDataList.size();
         }
         return -1;
+    }
+
+    private double roundAvoid(float value, int places) {
+        final double scale = Math.pow(10, places);
+        return Math.round(value * scale) / scale;
     }
 }

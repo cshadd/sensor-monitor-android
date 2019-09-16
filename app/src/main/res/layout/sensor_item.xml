@@ -21,9 +21,9 @@
         android:layout_weight="3"
         android:gravity="center" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
         android:layout_weight="3" />
 
     <androidx.cardview.widget.CardView
@@ -42,16 +42,16 @@
             android:padding="5dp" />
     </androidx.cardview.widget.CardView>
 
-    <TextView
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="10dp"
         android:layout_weight="3" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="5">
 
         <TextView
             android:id="@+id/sensor_value"
@@ -59,9 +59,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <TextView
             android:id="@+id/sensor_value_min"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Space
+            android:layout_width="10dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 

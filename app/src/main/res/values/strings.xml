@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">Sensor-Monitor-Android</string>
     <string name="title_activity_main">Sensor Monitor</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_close">Close</string>
+    <string name="action_reset">Sensor Reset</string>
 
     <string name="refresh">Refreshing</string>
     <string name="sensor_available">Available</string>
     <string name="sensor_unavailable">Unavailable</string>
     <string name="sensor_name">Sensor Name: %1$s</string>
-    <string name="sensor_value">Current Value: %1$s</string>
-    <string name="sensor_value_max">Session Max Value: %1$s</string>
-    <string name="sensor_value_min">Session Min Value: %1$s</string>
+    <string name="sensor_value">Current: %1$s</string>
+    <string name="sensor_value_max">Session Max: %1$s</string>
+    <string name="sensor_value_min">Session Min: %1$s</string>
 </resources>

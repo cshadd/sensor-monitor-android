@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="io.github.cshadd.sensor_monitor_android.Main">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_sensor_reset"
+        android:icon="@android:drawable/alert_dark_frame"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_reset"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_close"
+        android:orderInCategory="100"
+        android:title="@string/action_close"
         app:showAsAction="never" />
 </menu>

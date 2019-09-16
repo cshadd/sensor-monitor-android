@@ -12,6 +12,8 @@ public class SensorData
     private float[] value;
     private float[] valueMax;
     private float[] valueMin;
+    private String[] valuePrefix;
+    private String[] valueSuffix;
 
     private SensorData() {
         this(null);
@@ -19,7 +21,7 @@ public class SensorData
     }
 
     private SensorData(Sensor sensor) {
-        this(sensor, true, null);
+        this(sensor, false, null);
         return;
     }
 
@@ -37,19 +39,28 @@ public class SensorData
         super();
         this.setSensor(sensor);
         this.setAvailable(isAvailable);
-        if (sensor != null) {
-            this.setValueMax(new float[20]);
-            this.setValueMin(new float[20]);
-            this.setValue(new float[20]);
-        }
-        else {
-            this.setValueMax(new float[0]);
-            this.setValueMin(new float[0]);
-            this.setValue(new float[0]);
-        }
+
+        this.setValueMax(new float[0]);
+        this.setValueMin(new float[0]);
+        this.setValuePrefix(new String[0]);
+        this.setValueSuffix(new String[0]);
+        this.setValue(new float[0]);
+
         this.setSensorNameOverride(sensorNameOverride);
         this.setListener(listener);
         return;
+    }
+
+    public boolean clear() {
+        if (this.value != null && this.valueMax != null
+                && this.valueMin != null) {
+            for (int i = 0; i < this.value.length; i++) {
+                this.value[i] = 0;
+                this.valueMax[i] = 0;
+                this.valueMin[i] = 0;
+            }
+        }
+        return true;
     }
 
     public boolean getAvailable() {
@@ -80,6 +91,12 @@ public class SensorData
         return this.valueMin;
     }
 
+    public String[] getValuePrefix() {
+        return this.valuePrefix;
+    }
+
+    public String[] getValueSuffix() { return this.valueSuffix; }
+
     public String name() {
         final Sensor sensor = getSensor();
         if (sensor != null && getSensorNameOverride() == null) {
@@ -88,7 +105,7 @@ public class SensorData
         return "" + getSensorNameOverride();
     }
 
-    private void setAvailable(boolean available) {
+    public void setAvailable(boolean available) {
         this.available = available;
         return;
     }
@@ -110,14 +127,28 @@ public class SensorData
 
     public void setValue(float[] value) {
         this.value = value;
-        for (int i = 0; i < value.length; i++) {
-            if (value[i] < valueMin[i]) {
-                valueMin[i] = value[i];
+        if (this.value != null && this.valueMax != null
+            && this.valueMin != null && this.valuePrefix != null
+            && this.valueSuffix != null) {
+            if (this.value.length != this.valueMax.length
+                    || this.value.length != this.valueMin.length
+                    || this.value.length != this.valuePrefix.length
+                    || this.value.length != this.valueSuffix.length) {
+                this.setValueMax(new float[this.value.length]);
+                this.setValueMin(new float[this.value.length]);
+                this.setValuePrefix(new String[this.value.length]);
+                this.setValueSuffix(new String[this.value.length]);
             }
-            if (value[i] > valueMax[i]) {
-                valueMax[i] = value[i];
+            for (int i = 0; i < this.value.length; i++) {
+                if (value[i] < this.valueMin[i]) {
+                    this.valueMin[i] = value[i];
+                }
+                if (value[i] > this.valueMax[i]) {
+                    this.valueMax[i] = value[i];
+                }
             }
         }
+
         return;
     }
 
@@ -128,6 +159,16 @@ public class SensorData
 
     private void setValueMin(float[] valueMin) {
         this.valueMin = valueMin;
+        return;
+    }
+
+    public void setValuePrefix(String[] valuePrefix) {
+        this.valuePrefix = valuePrefix;
+        return;
+    }
+
+    public void setValueSuffix(String[] valueSuffix) {
+        this.valueSuffix = valueSuffix;
         return;
     }
 }
